@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block titulo %}
+  Libro Por Autor
+{% endblock titulo %}
+
+{% block contenido %}
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Libro Por Autor</h1>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Tabla de Datos</h6>
+            </div>
+            <div class="card-body">
+              <button type="button" name="button" class="btn btn-primary">Agregar Libro Por Autor</button>
+              <br><br>
+              
+              {% if libro_por_autores %}
+              <div class="table-responsive">
+                <table class="table table-bordered"  width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Autor</th>
+                      <th>ISBN</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for libro_autor in libro_por_autores %}
+                    <tr>
+                      <td>{{ libro_autor.id_autor }}</td>
+                      <td>{{ libro_autor.isbn }}</td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              {% else %}
+                <h1>NO HAY DATOS</h1>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+{% endblock contenido %}

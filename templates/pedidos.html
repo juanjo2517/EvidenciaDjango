@@ -1,0 +1,64 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block titulo %}
+  Pedidos
+{% endblock titulo %}
+
+{% block contenido %}
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Pedidos</h1>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Tabla de Datos</h6>
+            </div>
+            <div class="card-body">
+              <button type="button" name="button" class="btn btn-primary">Agregar Pedido</button>
+              <br><br>
+              {% if pedidos %}
+              <div class="table-responsive">
+                <table class="table table-bordered"  width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th># Pedido</th>
+                      <th>Cliente</th>
+                      <th>Libro</th>
+                      <th>Fecha</th>
+                      <th>Cantidad</th>
+                      <th>Valor</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for pedido in pedidos %}
+                    <tr>
+                      <td>{{ pedido.nro_pedido }}</td>
+                      <td>{{ pedido.id_cliente }}</td>
+                      <td>{{ pedido.isbn }}</td>
+                      <td>{{ pedido.fecha_pedido }}</td>
+                      <td>{{ pedido.cantidad }}</td>
+                      <td><b>${{ pedido.valor }}</b> <sup>COP</sup></td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              {% else %}
+                <h1>NO HAY PEDIDOS</h1>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+{% endblock contenido %}
