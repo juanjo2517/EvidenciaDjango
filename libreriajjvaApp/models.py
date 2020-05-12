@@ -8,6 +8,7 @@
 from django.db import models
 
 
+
 class Autores(models.Model):
     id_autor = models.AutoField(primary_key=True)
     apellidos = models.CharField(max_length=25)
@@ -16,14 +17,14 @@ class Autores(models.Model):
     class Meta:
         managed = False
         db_table = 'autores'
-    
+
     def __str__(self):
         return '{} - {} - {}'.format(
             self.id_autor,
             self.nombres,
             self.apellidos
         )
-    
+
 
 
 class Categorias(models.Model):
@@ -33,7 +34,7 @@ class Categorias(models.Model):
     class Meta:
         managed = False
         db_table = 'categorias'
-    
+
     def __str__(self):
       return '{} - {}'.format(
             self.id_categoria,

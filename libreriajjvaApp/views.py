@@ -6,12 +6,19 @@ from .models import Autores, Cliente, Categorias, Libros, LibroPorAutor, Pedidos
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html') #index.html es el template
+
+"""VISTAS BASADAS EN CLASES. SON MÁS FACILES DE USAR
+ListView es una clase que es para listar datos rapidamente"""
 
 class ListarCliente(ListView):
-    model = Cliente
-    template_name = 'clientes.html'
-    context_object_name = 'clientes'
+    model = Cliente #Modelo al cual se va listar
+    template_name = 'clientes.html' #Nombre del template
+    context_object_name = 'clientes' #Como se va a llamar el diccionario que trae los datos
+
+"""Para entender mejor vaya al template clientes.html, está en la carpeta Templates.
+Vea el inicio del archivo"""
+
 
 class ListarAutor(ListView):
     model = Autores
@@ -37,5 +44,3 @@ class ListarPedidoCliente(ListView):
     model = PedidosCliente
     template_name = 'pedidos.html'
     context_object_name = 'pedidos'
-
-

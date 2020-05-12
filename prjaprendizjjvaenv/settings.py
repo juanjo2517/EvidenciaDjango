@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-  
+
 ]
 
 MIDDLEWARE = [
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'prjaprendizjjvaenv.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates')] #INDICA EN QUE CARPETA ESTÁN LOS TEMPLATES
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -124,6 +124,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+"""ESTAS DOS LINEAS DE CODIGO INDICAN DONDE ESTÁ EL CSS, JS, IMG, ETC.
+REVISE LA CARPETA static DEL PROYECTO PARA QUE PILLE"""
 
 STATIC_URL = '/static/'
 

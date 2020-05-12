@@ -12,3 +12,6 @@ urlpatterns = [
     path('pedidos_cliente', ListarPedidoCliente.as_view(), name='pedidosCliente')
 ]
 
+"""Cuando se usan vistas basadas en clases se debe poner as_view()
+miren los paths para comprobar
+"""
