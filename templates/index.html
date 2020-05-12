@@ -16,7 +16,7 @@
 
   <!-- Custom fonts for this template-->
   <link rel="shortcut icon" href="{% static 'img/icon.png' %}" type="image/ico" />
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- PILLE LA ETIQUETA QUE TIENE. {% static ''%} hace referencia a la carpeta static.. 
@@ -48,8 +48,8 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'libreria:cliente' %}">
-          <i class="far fa-id-badge"></i>
-          <span>Cliente</span></a>
+          <i class="fas fa-users"></i>
+          <span>Clientes</span></a>
       </li>
 
       <li class="nav-item active">
@@ -60,13 +60,13 @@
 
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'libreria:categoria' %}">
-          <i class="fas fa-list"></i>
+          <i class="far fa-list-alt"></i>
           <span>Categoría</span></a>
       </li>
 
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'libreria:libro' %}">
-          <i class="fas fa-book"></i>
+          <i class="fas fa-swatchbook"></i>
           <span>Libro</span></a>
       </li>
 
@@ -78,7 +78,7 @@
 
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'libreria:pedidosCliente' %}">
-          <i class="fas fa-dolly"></i>
+          <i class="fas fa-dolly-flatbed"></i>
           <span>Pedidos</span></a>
       </li>
 
@@ -114,10 +114,10 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
+        {% block buscador %}
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
                   <i class="fas fa-search fa-sm"></i>
@@ -125,6 +125,7 @@
               </div>
             </div>
           </form>
+        {% endblock buscador %}
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -330,15 +331,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">¿Seguro que quiere salir?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">Seleccione "Salír" si desea cerrar la sesión.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="#">Salír</a>
         </div>
       </div>
     </div>

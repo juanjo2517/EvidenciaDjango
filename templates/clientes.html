@@ -1,9 +1,27 @@
 {% extends 'index.html' %} <!-- Hereda el codigo del index -->
 {% load static %}  <!-- Este codigo permite acceder a la carpeta static -->
 
-{% block titulo %}  <!-- Los block despues le explico -->
+{% block titulo %}  
 Clientes
 {% endblock titulo %}
+
+{% block buscador %}
+
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+method="POST">
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." name="buscar" value="{{ request.POST.buscar }}">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-search fa-sm"></i>
+      </button>
+    </div>
+  </div>
+</form>
+
+{% endblock buscador %}
+
 
 {% block contenido %}
 
@@ -23,7 +41,7 @@ Clientes
               <h6 class="m-0 font-weight-bold text-primary">Tabla de Datos</h6>
             </div>
             <div class="card-body">
-              <button type="button" name="button" class="btn btn-primary">Agregar Clientes</button>
+              <button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#logoutModal">Agregar Clientes</button>
               <br><br>
             {% if clientes %} <!-- Aqui pregunta si el diccionario se envio. Recuerde que en las views
             le dijimos como se llama el objeto, en este caso clientes. VAYA AL INDEX.HTML -->
@@ -41,17 +59,17 @@ Clientes
                     </tr>
                   </thead>
                   <tbody>
-                {% for cliente in clientes %}
-                    <tr>
-                      <td>{{ cliente.id_cliente }}</td>
-                      <td>{{ cliente.identificacion }}</td>
-                      <td>{{ cliente.nombres }}</td>
-                      <td>{{ cliente.apellidos }}</td>
-                      <td>{{ cliente.telefono }}</td>
-                      <td>{{ cliente.direccion }}</td>
-                      <td>{{ cliente.correo_electronico }}</td>
-                    </tr>
-                {% endfor %}
+                    {% for cliente in clientes %}
+                      <tr>
+                        <td>{{ cliente.id_cliente }}</td>
+                        <td>{{ cliente.identificacion }}</td>
+                        <td>{{ cliente.nombres }}</td>
+                        <td>{{ cliente.apellidos }}</td>
+                        <td>{{ cliente.telefono }}</td>
+                        <td>{{ cliente.direccion }}</td>
+                        <td>{{ cliente.correo_electronico }}</td>
+                      </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
