@@ -5,6 +5,26 @@
   Categoría
 {% endblock titulo %}
 
+
+
+{% block buscador %}
+
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+method="POST">
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." name="buscar" value="{{ request.POST.buscar }}">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-search fa-sm"></i>
+      </button>
+    </div>
+  </div>
+</form>
+
+{% endblock buscador %}
+
+
 {% block contenido %}
         <!-- End of Topbar -->
 
@@ -20,7 +40,8 @@
               <h6 class="m-0 font-weight-bold text-primary">Tabla de Datos</h6>
             </div>
             <div class="card-body">
-              <button type="button" name="button" class="btn btn-primary">Agregar Categoría</button>
+            <a href="{% url 'libreria:categoria' %}" class="btn btn-primary">Listar todo</a>
+              <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'libreria:agregar_categoria' %}')">Agregar Categoría</button>
               <br><br>
               {% if categorias %}
               <div class="table-responsive">
@@ -29,6 +50,7 @@
                     <tr>
                       <th>ID</th>
                       <th>Categoría</th>
+                      <th>Accion</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -37,6 +59,15 @@
                   <tr>
                     <td>{{ categoria.id_categoria }}</td>
                     <td>{{ categoria.categoria }}</td>
+                    <td>
+                      <button class="btn btn-danger" type="button" onclick="abrirModalEliminacion('{% url 'libreria:eliminar_categoria' categoria.id_categoria %}')">
+                        <i class="fa fa-user-times"></i>
+                      </button>
+                            
+                      <button class="btn btn-primary" type="button" onclick="abrirModalEdicion('{% url 'libreria:editar_categoria' categoria.id_categoria %}')">
+                        <i class="fa fa-user-edit"></i>
+                      </button>
+                    </td>
                   </tr>
 
                   {% endfor %}
@@ -54,4 +85,20 @@
 
       </div>
       <!-- End of Main Content -->
+
+      <!-- Ventana modal -->
+<div class="modal fade" id="creacion" role="dialog"> 
+
+</div>
+
+<div class="modal fade" id="eliminacion" role="dialog"> 
+
+</div>
+
+<div class="modal fade" id="edicion" role="dialog"> 
+  {% block extrajs %}
+    <script src= "{% static 'js/modals/modals.js' %}"></script>
+  {% endblock extrajs %}
+</div>
+
 {% endblock contenido %}

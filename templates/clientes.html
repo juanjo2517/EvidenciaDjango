@@ -41,7 +41,8 @@ method="POST">
               <h6 class="m-0 font-weight-bold text-primary">Tabla de Datos</h6>
             </div>
             <div class="card-body">
-              <button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#logoutModal">Agregar Clientes</button>
+            <a href="{% url 'libreria:cliente' %}" class="btn btn-primary">Listar todo</a>
+            <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'libreria:agregar_cliente' %}')">Agregar Cliente</button>
               <br><br>
             {% if clientes %} <!-- Aqui pregunta si el diccionario se envio. Recuerde que en las views
             le dijimos como se llama el objeto, en este caso clientes. VAYA AL INDEX.HTML -->
@@ -56,6 +57,7 @@ method="POST">
                       <th>Teléfono</th>
                       <th>Dirección</th>
                       <th>E-mail</th>
+                      <th>Accion</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -68,6 +70,18 @@ method="POST">
                         <td>{{ cliente.telefono }}</td>
                         <td>{{ cliente.direccion }}</td>
                         <td>{{ cliente.correo_electronico }}</td>
+                        
+                          <td>
+                            <button class="btn btn-danger" type="button" onclick="abrirModalEliminacion('{% url 'libreria:eliminar_cliente' cliente.id_cliente %}')">
+                              <i class="fa fa-user-times"></i>
+                            </button>
+                            
+                            <button class="btn btn-primary" type="button" onclick="abrirModalEdicion('{% url 'libreria:editar_cliente' cliente.id_cliente %}')">
+                              <i class="fa fa-user-edit"></i>
+                            </button>
+                            
+                          </td>
+                      
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -80,8 +94,25 @@ method="POST">
           </div>
 
         </div>
-        <!-- /.container-fluid -->
+      
 
       </div>
-      <!-- End of Main Content -->
+    
+<!-- Ventana modal -->
+<div class="modal fade" id="creacion" role="dialog"> 
+
+</div>
+
+<div class="modal fade" id="eliminacion" role="dialog"> 
+
+</div>
+
+<div class="modal fade" id="edicion" role="dialog"> 
+
+{% block extrajs %}
+  <script src= "{% static 'js/modals/modals.js' %}"></script>
+{% endblock extrajs %}
+</div>
+
+
 {% endblock contenido %}

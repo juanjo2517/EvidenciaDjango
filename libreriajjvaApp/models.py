@@ -17,6 +17,7 @@ class Autores(models.Model):
     class Meta:
         managed = False
         db_table = 'autores'
+        ordering = ['id_autor']
 
     def __str__(self):
         return '{} - {} - {}'.format(
@@ -34,6 +35,7 @@ class Categorias(models.Model):
     class Meta:
         managed = False
         db_table = 'categorias'
+        ordering = ['id_categoria']
 
     def __str__(self):
       return '{} - {}'.format(
@@ -54,9 +56,11 @@ class Cliente(models.Model):
     class Meta:
         managed = False
         db_table = 'cliente'
+        ordering = ['id_cliente']
 
     def __str__(self):
-        return '{} - {} - {} - {} - {}'.format(
+        return '{} - {} - {} - {} - {} - {}'.format(
+            self.id_cliente,
             self.identificacion,
             self.nombres,
             self.apellidos,
@@ -86,7 +90,7 @@ class Libros(models.Model):
     fecha_pub = models.DateField(blank=True, null=True)
     categoria = models.ForeignKey(Categorias, models.DO_NOTHING, db_column='categoria')
     precio = models.IntegerField()
-    portada = models.BinaryField(blank=True, null=True)
+    portada = models.ImageField('Imagen de Portada', upload_to='portada/', max_length=200, blank = True,null = True, default='')
 
     class Meta:
         managed = False

@@ -5,6 +5,24 @@
   Pedidos
 {% endblock titulo %}
 
+
+{% block buscador %}
+
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+method="POST">
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." name="buscar" value="{{ request.POST.buscar }}">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-search fa-sm"></i>
+      </button>
+    </div>
+  </div>
+</form>
+
+{% endblock buscador %}
+
 {% block contenido %}
         <!-- End of Topbar -->
 
@@ -18,8 +36,10 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Tabla de Datos</h6>
+              
             </div>
             <div class="card-body">
+            <a href="{% url 'libreria:pedidos_cliente' %}" class="btn btn-primary">Listar todo</a>
               <button type="button" name="button" class="btn btn-primary">Agregar Pedido</button>
               <br><br>
               {% if pedidos %}
@@ -33,7 +53,7 @@
                       <th>Fecha</th>
                       <th>Cantidad</th>
                       <th>Valor</th>
-
+                      <th>Accion</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -45,6 +65,10 @@
                       <td>{{ pedido.fecha_pedido }}</td>
                       <td>{{ pedido.cantidad }}</td>
                       <td><b>${{ pedido.valor }}</b> <sup>COP</sup></td>
+                      <td>
+                        <li><a href="#"  style="color: #e74a3b;">Borrar</a></li>
+                        <li><a href="#" style="color: #4e73df;">Editar</a></li>
+                      </td>
                     </tr>
                   {% endfor %}
                   </tbody>
