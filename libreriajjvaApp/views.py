@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.contrib import auth 
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Autores, Cliente, Categorias, Libros, LibroPorAutor, PedidosCliente
@@ -192,3 +194,20 @@ def listar_pedido(request):
     
     return render(request, 'pedidos.html', {'pedidos':pedido})  
 
+
+def login(request):
+    username = request.POST.get('username','')
+    password = request.POST.get('password','')
+    user = auth.authenticate(username=username, password=password)
+    if user is not None and user.is_active():
+        auth.login(request, user)
+        return HttpResponseRedirect('/account/loggedin')
+    else:
+        return HttpResponseRedirect('/account/invalid')
+
+
+
+def logout(request):
+    auth.logout(request)
+    
+    return HttpResponseRedirect('/account/loggedin')

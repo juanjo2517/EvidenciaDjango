@@ -100,7 +100,7 @@ class Libros(models.Model):
         return '{} - {} - {}'.format(
             self.isbn,
             self.titulo,
-            self.precio
+            "$"+str(self.precio)
         )
 
 
