@@ -73,12 +73,6 @@
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'libreria:libro_por_autor' %}">
-          <i class="fas fa-book-reader"></i>
-          <span>Libro por Autor</span></a>
-      </li>
-
-      <li class="nav-item active">
         <a class="nav-link" href="{% url 'libreria:pedidos_cliente' %}">
           <i class="fas fa-dolly-flatbed"></i>
           <span>Pedidos</span></a>
@@ -262,8 +256,12 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Juan José</span>
-                <img class="img-profile rounded-circle" src="{% static 'img/perfil.png' %}">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.nombre }} {{ user.apellido }}</span>
+                {% if user.imagen == "" %}
+                  <img class="img-profile rounded-circle" src="/media/perfil/avatar.png">
+                {% else %}
+                  <img class="img-profile rounded-circle" src="{{ user.imagen.url }}">
+                {% endif %}
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -276,7 +274,7 @@
                   Configuraciones
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="{% url 'logout'  %}" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Cerrar Sesión
                 </a>
@@ -293,11 +291,23 @@
           <!-- 404 Error Text -->
           <div class="text-center">
             <h1>
-              ¡BIENVENID@!
+              ¡BIENVENID@ {{ user.nombre | upper}}! 
             </h1>
-            <p class="lead text-gray-800 mb-5">Bienvenido a BookSoft 2020</p>
-            <p class="text-gray-500 mb-0">El mejor sistema de administración para tu sistema de ventas de libros y mucho más..</p>
-
+            <p class="lead text-gray-800 mb-5">Bienvenido a BookSoft 2020 </p>
+            <p class="text-gray-500 mb-0">El mejor sistema de administración para tu sistema de ventas de libros y mucho más...</p>
+            <br>
+            {% if user.imagen == "" %}
+            <hr>
+            <p class="lead text-gray-800 mb-5">
+              No tienes foto de perfil ¿Quiere agregar una?<br><br>
+              <button type="submit" class="btn btn-primary" 
+              onclick="abrirModalEdicion('{% url 'usuario:agregar_foto' user.id %}')">
+                <i class="fas fa-plus"></i> Agregar 
+              </button>
+            </p>
+              
+            
+            {% endif %}
           </div>
 
         </div>
@@ -341,7 +351,7 @@
         <div class="modal-body">Seleccione "Salír" si desea cerrar la sesión.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="#">Salír</a>
+          <a class="btn btn-primary" href="{% url 'logout'  %} ">Salír</a>
         </div>
       </div>
     </div>
@@ -364,8 +374,12 @@
  src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"
  data-search-pseudo-elements></script>
 
+</div>
+
+<div class="modal fade" id="edicion" role="dialog"> 
+
 {% block extrajs %}
-  
+  <script src= "{% static 'js/modals/modals.js' %}"></script>
 {% endblock extrajs %}
 
 </body>

@@ -41,7 +41,10 @@ method="POST">
             </div>
             <div class="card-body">
             <a href="{% url 'libreria:categoria' %}" class="btn btn-primary">Listar todo</a>
-              <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'libreria:agregar_categoria' %}')">Agregar Categoría</button>
+              {% if user.usuario_administrador %}
+                <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'libreria:agregar_categoria' %}')">Agregar Categoría</button>
+              {% endif %}
+              
               <br><br>
               {% if categorias %}
               <div class="table-responsive">

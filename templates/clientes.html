@@ -42,7 +42,9 @@ method="POST">
             </div>
             <div class="card-body">
             <a href="{% url 'libreria:cliente' %}" class="btn btn-primary">Listar todo</a>
-            <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'libreria:agregar_cliente' %}')">Agregar Cliente</button>
+            {% if user.usuario_administrador %}
+              <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'libreria:agregar_cliente' %}')">Agregar Cliente</button>
+            {% endif %}
               <br><br>
             {% if clientes %} <!-- Aqui pregunta si el diccionario se envio. Recuerde que en las views
             le dijimos como se llama el objeto, en este caso clientes. VAYA AL INDEX.HTML -->
@@ -70,8 +72,8 @@ method="POST">
                         <td>{{ cliente.telefono }}</td>
                         <td>{{ cliente.direccion }}</td>
                         <td>{{ cliente.correo_electronico }}</td>
-                        
-                          <td>
+                                              
+                        <td>
                             <button class="btn btn-danger" type="button" onclick="abrirModalEliminacion('{% url 'libreria:eliminar_cliente' cliente.id_cliente %}')">
                               <i class="fa fa-user-times"></i>
                             </button>
@@ -80,7 +82,8 @@ method="POST">
                               <i class="fa fa-user-edit"></i>
                             </button>
                             
-                          </td>
+                        </td>
+
                       
                       </tr>
                     {% endfor %}

@@ -40,7 +40,9 @@ method="POST">
             </div>
             <div class="card-body">
             <a href="{% url 'libreria:pedidos_cliente' %}" class="btn btn-primary">Listar todo</a>
-              <button type="button" name="button" class="btn btn-primary">Agregar Pedido</button>
+              {% if user.usuario_administrador %}
+                <button type="button" name="button" class="btn btn-primary">Agregar Pedido</button>
+              {% endif %}
               <br><br>
               {% if pedidos %}
               <div class="table-responsive">
