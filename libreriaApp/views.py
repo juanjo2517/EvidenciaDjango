@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import auth 
+from django.views.defaults import page_not_found
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.db.models import Q
@@ -8,6 +9,10 @@ from .models import Autores, Cliente, Categorias, Libros, PedidosCliente
 from .forms import ClienteForm, AutorForm, CategoriaForm, LibroForm
 
 # Create your views here.
+
+def pagina_404(request):
+    return render(request, '404.html')
+
 
 def index(request):
     return render(request, 'index.html') #index.html es el template
@@ -169,19 +174,5 @@ def listar_pedido(request):
     return render(request, 'pedidos.html', {'pedidos':pedido})  
 
 
-def login(request):
-    username = request.POST.get('username','')
-    password = request.POST.get('password','')
-    user = auth.authenticate(username=username, password=password)
-    if user is not None and user.is_active():
-        auth.login(request, user)
-        return HttpResponseRedirect('/account/loggedin')
-    else:
-        return HttpResponseRedirect('/account/invalid')
-
-
-
-def logout(request):
-    auth.logout(request)
-    
-    return HttpResponseRedirect('/account/loggedin')
+def detalle(request):
+    return render(request, 'modals/libro/libro_detalle.html')

@@ -81,7 +81,7 @@ class CategoriaForm(forms.ModelForm):
 class LibroForm(forms.ModelForm):
     class Meta:
         model = Libros
-        fields = ['isbn','titulo', 'fecha_pub','categoria', 'autor', 'precio','portada']
+        fields = ['isbn','titulo', 'fecha_pub','categoria', 'id_autor', 'precio','portada']
         
         años = ('1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987',
           '1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995',
@@ -116,10 +116,9 @@ class LibroForm(forms.ModelForm):
                     'placeholder': 'Ingrese Categoría'
                 }
             ),
-            'autor': forms.SelectMultiple(
+            'id_autor': forms.Select(
                 attrs= {
-                    'class': 'form-control',
-                    'placeholder': 'Ingrese Autores'
+                    'class': 'form-control'
                 }
             ),
             'precio': forms.NumberInput(

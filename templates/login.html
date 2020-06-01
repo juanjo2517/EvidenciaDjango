@@ -13,6 +13,7 @@
   <title>BookSoft - Inicio De Sesión</title>
 
   <!-- Custom fonts for this template-->
+  <link rel="shortcut icon" href="{% static 'img/icon.png' %}" type="image/ico" />
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -34,7 +35,7 @@
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-                {{form.errors}}
+                
               <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
               <div class="col-lg-6">
                 <div class="p-5">
@@ -66,6 +67,16 @@
                   <div class="text-center">
                     <a class="small" href="{% url 'usuario:registro_usuario'%} ">¡Crea una Cuenta!</a>
                   </div>
+                    <br>
+                    {% if form.errors %}              
+                      {% for error in form.get_invalid_login_error %}
+                        <h5 class="slogan mt-4" style="color: red;">
+                            <ul class="errorlist">
+                                <li>{{ error }}</li>
+                            </ul>
+                        </h5>
+                      {% endfor %}
+                    {% endif %}
                 </div>
               </div>
             </div>

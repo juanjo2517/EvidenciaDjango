@@ -45,18 +45,21 @@ class FormUsuario(forms.ModelForm):
                 attrs={
                     'class': 'form-control form-control-user',
                     'placeholder': 'Nombre',
+                    'required': 'required'
                 }
             ),
             'apellido': forms.TextInput(
                 attrs = {
                     'class': 'form-control form-control-user',
                     'placeholder': 'Apellido',
+                    'required': 'required'
                 }                
             ),
             'username': forms.TextInput(
                 attrs = {
                     'class': 'form-control form-control-user',
                     'placeholder': 'Usuario',
+                    'required': 'required'
                 }
             )
         }
@@ -71,7 +74,7 @@ class FormUsuario(forms.ModelForm):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 != password2:
-            raise forms.ValidationError('Las Contraseñas no coinciden!')
+            raise forms.ValidationError('¡Las Contraseñas no coinciden!')
         return password2
 
     def save(self,commit = True):

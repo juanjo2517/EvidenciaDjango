@@ -43,7 +43,8 @@ method="POST">
             <a href="{% url 'libreria:libro' %}" class="btn btn-primary">Listar todo</a>
               {% if user.usuario_administrador %}
                 <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'libreria:agregar_libro' %}')">Agregar Libro</button>
-              {% endif %}
+                
+                {% endif %}
 
               <br><br>
               {% if libros %}
@@ -54,6 +55,7 @@ method="POST">
                       <th>ISBN</th>
                       <th>Título</th>
                       <th>Fecha de publicación</th>
+                      <th>Autor</th>
                       <th>Categoria</th>
                       <th>Precio</th>
                       <th>Portada</th>
@@ -67,12 +69,23 @@ method="POST">
                       <td>{{ libro.isbn }}</td>
                       <td>{{ libro.titulo }}</td>
                       <td>{{ libro.fecha_pub }}</td>
+                      <td>
+                      
+                        <li>{{libro.id_autor}} </li>
+                      
+                      </td>
                       <td>{{ libro.categoria.categoria }}</td>
                       <td><b>${{ libro.precio }}</b> <sup>COP</sup></td>
                       <td>
                       {% if libro.portada %}
                         <div class="row-picture">
                           <img class="circle" src="{{libro.portada.url}}" alt="icon" width="80" height="80">
+                          <br><br>
+                          <button class="btn btn-primary" 
+                          style="position: relative; left: 10px;"
+                          onclick="abrirModalDetalle('{% url 'libreria:libro_detalle' %}')">
+                            Ver...
+                          </button>
                         </div>                      
                       {% else %}
                         <div class="row-picture">
@@ -116,6 +129,18 @@ method="POST">
 
 <div class="modal fade" id="eliminacion" role="dialog"> 
 
+</div>
+
+<div class="modal fade" id="detalle" role="dialog"> 
+  <script>
+
+  function abrirModalDetalle(url){
+    $('#detalle').load(url,function(){
+      $(this).modal('show'); 
+    });
+  }
+
+  </script>
 </div>
 
 <div class="modal fade" id="edicion" role="dialog"> 

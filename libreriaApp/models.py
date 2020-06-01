@@ -10,11 +10,7 @@ class Autores(models.Model):
         ordering = ['id_autor']
 
     def __str__(self):
-        return '{} - {} - {}'.format(
-            self.id_autor,
-            self.nombres,
-            self.apellidos
-        )
+        return self.nombres +" "+ self.apellidos
 
 
 
@@ -62,15 +58,16 @@ class Libros(models.Model):
     categoria = models.ForeignKey(Categorias, on_delete = models.CASCADE)
     precio = models.IntegerField()
     portada = models.ImageField('Imagen de Portada', upload_to='portada/', max_length=200, blank = True,null = True, default='')
-    autor = models.ManyToManyField(Autores)
+    id_autor = models.ForeignKey(Autores, on_delete = models.CASCADE)
     
     class Meta:
         ordering = ['isbn']
 
     def __str__(self):
-        return '{} - {} - {}'.format(
+        return '{} - {} - {} - {}'.format(
             self.isbn,
             self.titulo,
+            self.id_autor,
             "$"+str(self.precio)
         )
 
