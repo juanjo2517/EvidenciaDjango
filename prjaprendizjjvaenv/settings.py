@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'prjaprendizjjvaenv.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'BookSoft-BD',
+        'NAME': 'Libreria-BD',
     }
 }
 # Password validation
@@ -102,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'userApp.Usuario'
+AUTH_USER_MODEL = 'userApp.UsuarioCliente'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

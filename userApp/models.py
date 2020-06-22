@@ -16,7 +16,7 @@ class UsuarioManager(BaseUserManager):
         user.set_password(password)
         user.save()
         return user
-    
+        
     def create_superuser(self,username,email,nombre, apellido, password):
         user = self.create_user(
             email,
@@ -30,11 +30,14 @@ class UsuarioManager(BaseUserManager):
         return user
 
 
-class Usuario(AbstractBaseUser):
+class UsuarioCliente(AbstractBaseUser):
+    identificacion = models.IntegerField(max_length=12, blank = True, null = True)
     nombre = models.CharField('Nombres', max_length=200, blank = True, null = True)
     apellido = models.CharField('Apellidos', max_length=200,blank = True, null = True)
     email = models.EmailField('Correo Electrónico', max_length=254,unique = True)
     username = models.CharField('Nombre de usuario',unique = True, max_length=100)
+    telefono = models.CharField(max_length=12, blank = True, null = True)
+    direccion = models.CharField(max_length=128, blank=True, null=True)
     imagen = models.ImageField('Imagen de Perfil', upload_to='perfil/', max_length=200,blank = False,null = False, default='perfil/avatar.png')
     usuario_activo = models.BooleanField(default = True)
     usuario_administrador = models.BooleanField(default = False)

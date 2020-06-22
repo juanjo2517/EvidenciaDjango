@@ -57,7 +57,9 @@ method="POST">
                       <th>ID</th>
                       <th>Nombre</th>
                       <th>Apellido</th>
-                      <th>Accion</th>
+                      {% if user.usuario_administrador %}
+                        <th>Accion</th>
+                      {% endif %}
                     </tr>
                   </thead>
                   <tbody>
@@ -66,6 +68,8 @@ method="POST">
                       <td>{{ autor.id_autor }}</td>
                       <td>{{ autor.nombres }}</td>
                       <td>{{ autor.apellidos }}</td>
+
+                      {% if user.usuario_administrador %}
                       <td>
                         <button class="btn btn-danger" type="button" onclick="abrirModalEliminacion('{% url 'libreria:eliminar_autor' autor.id_autor %}')">
                               <i class="fa fa-user-times"></i>
@@ -75,6 +79,7 @@ method="POST">
                               <i class="fa fa-user-edit"></i>
                         </button>
                       </td>
+                      {% endif %}
                     </tr>
                   {% endfor %}
                   </tbody>

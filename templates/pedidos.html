@@ -30,8 +30,10 @@ method="POST">
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Pedidos</h1>
-
+          <h1 class="h3 mb-2 text-gray-800">N° Pedidos: {{ carrito.count }}</h1>
+            {% if form.errors %}
+              {{ form.errors }}
+            {% endif %}
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -39,13 +41,22 @@ method="POST">
               
             </div>
             <div class="card-body">
-            <a href="{% url 'libreria:pedidos_cliente' %}" class="btn btn-primary">Listar todo</a>
+            <a href="{% url 'libreria:pedidos_cliente' user.id%}" class="btn btn-primary">Listar todo</a>
+              <a href="{% url 'libreria:libro' %}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></a>
               {% if user.usuario_administrador %}
-                <button type="button" name="button" class="btn btn-primary">Agregar Pedido</button>
+                <button type="button" name="button" class="btn btn-primary"
+                onclick="abrirModalCreacion('{% url 'libreria:agregar_pedido' %}')">
+                Agregar Pedido
+                </button>
               {% endif %}
               <br><br>
               {% if pedidos %}
               <div class="table-responsive">
+              {% if pedidos.id_cliente.id == user.id %}
+              {% else %}
+              
+
+              {% endif %}
                 <table class="table table-bordered"  width="100%" cellspacing="0">
                   <thead>
                     <tr>
@@ -60,24 +71,35 @@ method="POST">
                   </thead>
                   <tbody>
                   {% for pedido in pedidos %}
+                    {% if pedido.id_cliente.id == user.id %}
+              
                     <tr>
-                      <td>{{ pedido.nro_pedido }}</td>
+                      <td>{{ pedido.id_pedido }}</td>
                       <td>{{ pedido.id_cliente }}</td>
-                      <td>{{ pedido.isbn }}</td>
+                      <td>{{ pedido.isbn.titulo }}</td>
                       <td>{{ pedido.fecha_pedido }}</td>
                       <td>{{ pedido.cantidad }}</td>
                       <td><b>${{ pedido.valor }}</b> <sup>COP</sup></td>
                       <td>
-                        <li><a href="#"  style="color: #e74a3b;">Borrar</a></li>
-                        <li><a href="#" style="color: #4e73df;">Editar</a></li>
+                        
+                        <a class="btn btn-danger" href="{% url 'libreria:eliminar_pedido' pedido.id_pedido %}">
+                          <i class="fa fa-user-times"></i>
+                        </a>
+                  
                       </td>
                     </tr>
+                    {% else %}
+                    
+                    {% endif %}
                   {% endfor %}
                   </tbody>
                 </table>
               </div>
               {% else %}
-                <h1>NO HAY PEDIDOS</h1>
+                <center><h1>No tienes pedidos</h1></center>
+                <center><h4>Puedes comprar libros</h4></center>
+                <center><a href="{% url 'libreria:libro' %}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></a></center>
+                  <br><br>
               {% endif %}
             </div>
           </div>
@@ -86,5 +108,14 @@ method="POST">
         <!-- /.container-fluid -->
 
       </div>
+<div class="modal fade" id="eliminacion" role="dialog"> 
+
+</div>
+<div class="modal fade" id="creacion" role="dialog"> 
+
+{% block extrajs %}
+  <script src= "{% static 'js/modals/modals.js' %}"></script>
+{% endblock extrajs %}
+</div>
       <!-- End of Main Content -->
 {% endblock contenido %}

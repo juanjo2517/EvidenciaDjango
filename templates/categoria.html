@@ -53,7 +53,9 @@ method="POST">
                     <tr>
                       <th>ID</th>
                       <th>Categoría</th>
-                      <th>Accion</th>
+                      {% if user.usuario_administrador %}
+                        <th>Accion</th>
+                      {% endif %}
                     </tr>
                   </thead>
                   <tbody>
@@ -62,6 +64,7 @@ method="POST">
                   <tr>
                     <td>{{ categoria.id_categoria }}</td>
                     <td>{{ categoria.categoria }}</td>
+                    {% if user.usuario_administrador %}
                     <td>
                       <button class="btn btn-danger" type="button" onclick="abrirModalEliminacion('{% url 'libreria:eliminar_categoria' categoria.id_categoria %}')">
                         <i class="fa fa-user-times"></i>
@@ -71,6 +74,7 @@ method="POST">
                         <i class="fa fa-user-edit"></i>
                       </button>
                     </td>
+                    {% endif %}
                   </tr>
 
                   {% endfor %}

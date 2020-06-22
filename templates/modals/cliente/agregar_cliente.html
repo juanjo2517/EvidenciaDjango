@@ -6,10 +6,47 @@
                 <span aria-hidden="true" >&times;</span>
             </button>
         </div>
-        <form action= "{% url 'libreria:agregar_cliente' %}" method="POST">
+        <form action= "{% url 'usuario:registro_usuario' %}" method="POST">
             {% csrf_token %}
             <div class="modal-body">
-                {{ form.as_p }}
+                <div class="form-group row">
+                  <div style="position: relative; left: 100px;" class="col-sm-6 mb-3 mb-sm-0">
+                      {{ form.identificacion }}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                      {{ form.nombre }}
+                  </div>
+                  <div class="col-sm-6">
+                    {{ form.apellido}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                      {{ form.email }}
+                  </div>
+                  <div class="col-sm-6">
+                    {{ form.username}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                      {{ form.telefono }}
+                  </div>
+                  <div class="col-sm-6">
+                    {{ form.direccion }}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                      {{ form.password1 }}
+                  </div>
+                  <div class="col-sm-6">
+                     {{ form.password2 }}
+                  </div>
+                </div>
+                
             </div>
         <div class="modal-footer">
             <button class="btn btn-dark" type="button" data-dismiss="modal">

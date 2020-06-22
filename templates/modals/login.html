@@ -1,0 +1,30 @@
+<div class="modal fade" id="loginModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Inicio de Sesión</h2>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" >&times;</span>
+                </button>
+            </div>
+            <form action= "{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="text" name="username" class="form-control" id="username" placeholder="Nombre de Usuario">
+                    <br>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Contraseña">
+                </div>
+            <div class="modal-footer">
+
+                <button class="btn btn-dark" type="button" data-dismiss="modal">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary" type="submit">
+                    Iniciar Sesión
+                </button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -25,6 +25,7 @@
   Todo es por intuision -->
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/estiloLogin.css' %}" rel="stylesheet">
 
 </head>
 
@@ -46,12 +47,14 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-    {% if user.nombre %}    
+    {% if user.nombre %}
+      {% if user.usuario_administrador %}
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'libreria:cliente' %}">
+        <a class="nav-link" href="">
           <i class="fas fa-users"></i>
           <span>Clientes</span></a>
       </li>
+      {% endif %}    
 
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'libreria:autor' %}">
@@ -72,7 +75,7 @@
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'libreria:pedidos_cliente' %}">
+        <a class="nav-link" href="{% url 'libreria:pedidos_cliente' user.id%}">
           <i class="fas fa-dolly-flatbed"></i>
           <span>Pedidos</span></a>
       </li>
@@ -152,52 +155,12 @@
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
+                <i class="fas fa-shopping-cart"></i>
                 <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+                <span class="badge badge-danger badge-counter">{{carrito.count}}</span>
               </a>
               <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Notificacaciones
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">Diciembre 12, 2019</div>
-                    <span class="font-weight-bold">¡Un nuevo informe mensual está listo para descargar!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">Febrero 23, 2020</div>
-                    ¡Se ha hecho una venta de $523.000!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">Mayo 9, 2020</div>
-                    Alerta de gasto: Se ha hecho un gasto de $1'540.000 en productos nuevos.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar todas las notificacaciones</a>
-              </div>
-            </li>
-
+              
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -277,10 +240,12 @@
                   Configuraciones
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'logout'  %}" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar Sesión
-                </a>
+                {% if user.nombre %}                  
+                  <a class="dropdown-item" href="{% url 'logout'  %}" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Cerrar Sesión
+                  </a>
+                {% endif %}
               </div>
             </li>
 
@@ -318,7 +283,10 @@
               ¡NO HAS INICIADO SESIÓN! 
             </h1>
             <p class="lead text-gray-800 mb-5">Debes Iniciar sesión para ingresar al sistema. </p>
-            <a href="{% url 'login' %}" class="btn btn-primary">Iniciar Sesión</a>
+           <!--  <a href="{% url 'login' %}" class="btn btn-primary">Iniciar Sesión</a> -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+              Iniciar Sesión
+            </button>
           </div>
           {% endif %}
 
@@ -386,9 +354,18 @@
  src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"
  data-search-pseudo-elements></script>
 
+<div class="modal fade" id="edicion" role="dialog"> 
 </div>
 
-<div class="modal fade" id="edicion" role="dialog"> 
+{% include 'modals/login.html' %}
+
+<script>
+  $('#login_modal').click(function(){
+      $('#modal_login').modal();
+  });
+</script>
+</div>
+
 
 {% block extrajs %}
   <script src= "{% static 'js/modals/modals.js' %}"></script>

@@ -6,6 +6,7 @@
 {% endblock titulo %}
 
 
+
 {% block buscador %}
 
 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
@@ -59,7 +60,10 @@ method="POST">
                       <th>Categoria</th>
                       <th>Precio</th>
                       <th>Portada</th>
-                      <th>Accion</th>
+                      {% if user.usuario_administrador %}
+                        <th>Accion</th>
+                      {% endif %}
+                      <th>Comprar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -70,8 +74,9 @@ method="POST">
                       <td>{{ libro.titulo }}</td>
                       <td>{{ libro.fecha_pub }}</td>
                       <td>
-                      
-                        <li>{{libro.id_autor}} </li>
+                      {% for autor in libro.id_autor.all %}
+                        <li>{{autor.nombres}} {{ autor.apellidos }}</li>
+                      {% endfor %}
                       
                       </td>
                       <td>{{ libro.categoria.categoria }}</td>
@@ -81,11 +86,6 @@ method="POST">
                         <div class="row-picture">
                           <img class="circle" src="{{libro.portada.url}}" alt="icon" width="80" height="80">
                           <br><br>
-                          <button class="btn btn-primary" 
-                          style="position: relative; left: 10px;"
-                          onclick="abrirModalDetalle('{% url 'libreria:libro_detalle' %}')">
-                            Ver...
-                          </button>
                         </div>                      
                       {% else %}
                         <div class="row-picture">
@@ -94,6 +94,8 @@ method="POST">
                         </div>   
                       {% endif %}
                       </td>
+
+                      {% if user.usuario_administrador %}
                       <td>
                         <button class="btn btn-danger" type="button" onclick="abrirModalEliminacion('{% url 'libreria:eliminar_libro' libro.isbn %}')">
                           <i class="fa fa-user-times"></i>
@@ -103,6 +105,17 @@ method="POST">
                           <i class="fa fa-user-edit"></i>
                         </button>
                       
+                      </td>
+                      {% endif %}
+                      <td>
+                        <form action="{% url 'libreria:agregar_pedido' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id_cliente" value="{{ user.id }}">
+                        <input type="hidden" name="isbn" value ="{{ libro.isbn }}">
+                        <center><input type="number" name="cantidad" style="width: 50px; height: 25px;" value="1" ></center>
+                        <br>
+                        <center><button type="submit" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></button></center>
+                      </form>
                       </td>
                     </tr>
                   {% endfor %}

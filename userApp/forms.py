@@ -1,7 +1,7 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Usuario
+from .models import UsuarioCliente
 
 class FormLogin(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -9,9 +9,9 @@ class FormLogin(AuthenticationForm):
         self.fields['username'].widget.attrs['class'] = 'form-control form-control-user'
         self.fields['password'].widget.attrs['class'] = 'form-control form-control-user'
         self.fields['password'].widget.attrs['placeholder'] = 'Contraseña'
-        self.fields['username'].widget.attrs['placeholder'] = 'Correo Electrónico'
+        self.fields['username'].widget.attrs['placeholder'] = 'Usuario'
 
-class FormUsuario(forms.ModelForm):
+class FormUsuarioCliente(forms.ModelForm):
 
     password1 = forms.CharField(label = 'Contraseña',widget = forms.PasswordInput(
         attrs = {
@@ -32,8 +32,8 @@ class FormUsuario(forms.ModelForm):
     ))
 
     class Meta:
-        model = Usuario
-        fields = ('email','username','nombre','apellido')
+        model = UsuarioCliente
+        fields = ('email','username','identificacion','nombre','apellido','telefono', 'direccion')
         widgets = {
             'email': forms.EmailInput(
                 attrs = {
@@ -54,6 +54,27 @@ class FormUsuario(forms.ModelForm):
                     'placeholder': 'Apellido',
                     'required': 'required'
                 }                
+            ),
+            'identificacion': forms.NumberInput(
+                attrs={
+                    'class': 'form-control form-control-user',
+                        'placeholder': 'Identificación',
+                    'required': 'required'
+                }
+            ),
+            'telefono': forms.NumberInput(
+                attrs={
+                    'class': 'form-control form-control-user',
+                    'placeholder': 'Teléfono',
+                    'required': 'required'
+                }
+            ),
+            'direccion': forms.TextInput(
+                attrs={
+                    'class': 'form-control form-control-user',
+                    'placeholder': 'Dirección',
+                    'required': 'required'
+                }
             ),
             'username': forms.TextInput(
                 attrs = {
@@ -86,7 +107,7 @@ class FormUsuario(forms.ModelForm):
 
 class FormUsuarioFoto(forms.ModelForm):
     class Meta:
-        model = Usuario
+        model = UsuarioCliente
         fields = ('imagen',)
         widgets = {
             'imagen': forms.FileInput(

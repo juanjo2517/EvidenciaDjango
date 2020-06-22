@@ -1,6 +1,6 @@
 from django import forms
-from .models import Cliente, Autores, Categorias, Libros
-class ClienteForm(forms.ModelForm):
+from .models import  Autores, Categorias, Libros, PedidosCliente
+""" class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ['identificacion','nombres','apellidos','telefono','direccion','correo_electronico']
@@ -43,7 +43,7 @@ class ClienteForm(forms.ModelForm):
                 }
             )
         }
-
+ """
 class AutorForm(forms.ModelForm):
     class Meta:
         model = Autores
@@ -116,7 +116,7 @@ class LibroForm(forms.ModelForm):
                     'placeholder': 'Ingrese Categoría'
                 }
             ),
-            'id_autor': forms.Select(
+            'id_autor': forms.SelectMultiple(
                 attrs= {
                     'class': 'form-control'
                 }
@@ -133,4 +133,28 @@ class LibroForm(forms.ModelForm):
                     'placeholder': 'Imagen de Portada'
                 }
             )
+        }
+
+class PedidoClienteForm(forms.ModelForm):
+    class Meta:
+        model = PedidosCliente
+        fields = ['id_cliente', 'isbn', 'cantidad']
+
+        widgets = {
+            'id_cliente': forms.Select(
+                attrs = {
+                    'class': 'form-control'
+                }
+            ),
+            'isbn': forms.Select(
+                attrs = {
+                    'class': 'form-control'
+                }
+            ),
+            'cantidad': forms.NumberInput(
+                attrs = {
+                    'class': 'form-control',
+                    'placeholder': 'Cantidad'
+                }
+            ),
         }

@@ -41,18 +41,17 @@ method="POST">
               <h6 class="m-0 font-weight-bold text-primary">Tabla de Datos</h6>
             </div>
             <div class="card-body">
-            <a href="{% url 'libreria:cliente' %}" class="btn btn-primary">Listar todo</a>
+            <a href="{% url 'usuario:usuario_cliente' %}" class="btn btn-primary">Listar todo</a>
             {% if user.usuario_administrador %}
-              <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'libreria:agregar_cliente' %}')">Agregar Cliente</button>
+              <button class="btn btn-primary" type="button" onclick="abrirModalCreacion('{% url 'usuario:registro_usuario' %}')">Agregar Cliente</button>
             {% endif %}
               <br><br>
-            {% if clientes %} <!-- Aqui pregunta si el diccionario se envio. Recuerde que en las views
+            {% if usuario_cliente %} <!-- Aqui pregunta si el diccionario se envio. Recuerde que en las views
             le dijimos como se llama el objeto, en este caso clientes. VAYA AL INDEX.HTML -->
               <div class="table-responsive">
                 <table class="table table-bordered"  width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>ID</th>
                       <th>Identificación</th>
                       <th>Nombre</th>
                       <th>Apellido</th>
@@ -63,22 +62,21 @@ method="POST">
                     </tr>
                   </thead>
                   <tbody>
-                    {% for cliente in clientes %}
+                    {% for cliente in usuario_cliente %}
                       <tr>
-                        <td>{{ cliente.id_cliente }}</td>
                         <td>{{ cliente.identificacion }}</td>
-                        <td>{{ cliente.nombres }}</td>
-                        <td>{{ cliente.apellidos }}</td>
+                        <td>{{ cliente.nombre }}</td>
+                        <td>{{ cliente.apellido }}</td>
                         <td>{{ cliente.telefono }}</td>
                         <td>{{ cliente.direccion }}</td>
-                        <td>{{ cliente.correo_electronico }}</td>
+                        <td>{{ cliente.email }}</td>
                                               
                         <td>
-                            <button class="btn btn-danger" type="button" onclick="abrirModalEliminacion('{% url 'libreria:eliminar_cliente' cliente.id_cliente %}')">
+                            <button class="btn btn-danger" type="button">
                               <i class="fa fa-user-times"></i>
                             </button>
                             
-                            <button class="btn btn-primary" type="button" onclick="abrirModalEdicion('{% url 'libreria:editar_cliente' cliente.id_cliente %}')">
+                            <button class="btn btn-primary" type="button" {% comment %} onclick="abrirModalEdicion('{% url 'libreria:editar_cliente' cliente.id_cliente %}')" {% endcomment %}>
                               <i class="fa fa-user-edit"></i>
                             </button>
                             
