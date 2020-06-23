@@ -42,13 +42,7 @@ method="POST">
             </div>
             <div class="card-body">
             <a href="{% url 'libreria:pedidos_cliente' user.id%}" class="btn btn-primary">Listar todo</a>
-              <a href="{% url 'libreria:libro' %}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></a>
-              {% if user.usuario_administrador %}
-                <button type="button" name="button" class="btn btn-primary"
-                onclick="abrirModalCreacion('{% url 'libreria:agregar_pedido' %}')">
-                Agregar Pedido
-                </button>
-              {% endif %}
+              <a href="{% url 'libreria:libro' %}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i><sup> {{ carrito.count }}</sup></a>
               <br><br>
               {% if pedidos %}
               <div class="table-responsive">
@@ -74,9 +68,15 @@ method="POST">
                     {% if pedido.id_cliente.id == user.id %}
               
                     <tr>
-                      <td>{{ pedido.id_pedido }}</td>
+                      <td>AP725{{ pedido.id_pedido }}</td>
                       <td>{{ pedido.id_cliente }}</td>
-                      <td>{{ pedido.isbn.titulo }}</td>
+                      <td>
+                      <center>{{ pedido.isbn.titulo }}</center>
+                          <br>
+                        <div class="row-picture">
+                          <center><img class="circle" src="/media/{{ pedido.isbn.portada }}" alt="icon" width="80" height="130"></center>
+                        </div>   
+                      </td>
                       <td>{{ pedido.fecha_pedido }}</td>
                       <td>{{ pedido.cantidad }}</td>
                       <td><b>${{ pedido.valor }}</b> <sup>COP</sup></td>

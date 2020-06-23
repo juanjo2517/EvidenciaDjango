@@ -63,6 +63,8 @@ method="POST">
                   </thead>
                   <tbody>
                     {% for cliente in usuario_cliente %}
+                    {% if cliente.id != user.id%}
+                    
                       <tr>
                         <td>{{ cliente.identificacion }}</td>
                         <td>{{ cliente.nombre }}</td>
@@ -72,18 +74,17 @@ method="POST">
                         <td>{{ cliente.email }}</td>
                                               
                         <td>
-                            <button class="btn btn-danger" type="button">
+                            <button class="btn btn-danger" type="button" onclick="abrirModalEliminacion('{% url 'usuario:eliminar_cliente' cliente.id %}')">
                               <i class="fa fa-user-times"></i>
                             </button>
                             
-                            <button class="btn btn-primary" type="button" {% comment %} onclick="abrirModalEdicion('{% url 'libreria:editar_cliente' cliente.id_cliente %}')" {% endcomment %}>
-                              <i class="fa fa-user-edit"></i>
-                            </button>
                             
                         </td>
 
                       
                       </tr>
+                    {% else %}
+                    {% endif %}
                     {% endfor %}
                   </tbody>
                 </table>

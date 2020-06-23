@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from .models import UsuarioCliente
 from .forms import FormUsuarioCliente, FormLogin, FormUsuarioFoto
 # Create your views here.
@@ -72,7 +72,10 @@ class RegistrarUsuario(CreateView):
             nuevo_usuario.set_password(form.cleaned_data.get('password1'))
             nuevo_usuario.save()
             
-            return render(request, 'registro_exitoso.html' )
+            if self.template_name == "registro.html":
+                return render(request, 'registro_exitoso.html' )
+            else:
+                return redirect('usuario:listar_cliente')
         else:
             return render(request, self.template_name,{'form':form})
 
@@ -81,3 +84,16 @@ class AgregarFotoPerfil(UpdateView):
     form_class = FormUsuarioFoto
     template_name = 'modals/usuario/agregar_foto.html'
     success_url = reverse_lazy('libreria:index')
+
+class EditarCliente(UpdateView):
+    model = UsuarioCliente
+    template_name = 'modals/cliente/editar_cliente.html'
+    form_class = FormUsuarioCliente
+    success_url = reverse_lazy('usuario:listar_cliente')
+    
+
+class EliminarCliente(DeleteView):
+    model = UsuarioCliente
+    template_name = 'modals/cliente/eliminar_cliente.html'
+    form_class = FormUsuarioCliente
+    success_url = reverse_lazy('libreria:cliente')

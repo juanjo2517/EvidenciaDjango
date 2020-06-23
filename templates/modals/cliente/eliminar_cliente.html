@@ -6,7 +6,7 @@
                 <span aria-hidden="true" >&times;</span>
             </button>
         </div>
-        <form action= "{% url 'libreria:eliminar_cliente' object.id_cliente %}" method="POST">
+        <form action= "{% url 'usuario:eliminar_cliente' object.id %}" method="POST">
             {% csrf_token %}
             <div class="modal-body">
                 <h3 class="modal-title">¿Estás seguro que quiere eliminar este Cliente?</h3>

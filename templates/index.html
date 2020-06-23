@@ -50,7 +50,7 @@
     {% if user.nombre %}
       {% if user.usuario_administrador %}
       <li class="nav-item active">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{% url 'usuario:listar_cliente'  %}">
           <i class="fas fa-users"></i>
           <span>Clientes</span></a>
       </li>
@@ -154,13 +154,35 @@
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-shopping-cart"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">{{carrito.count}}</span>
+                <!-- Counter - Messages -->
+                <span class="badge badge-danger badge-counter">{{ carrito.count }}</span>
               </a>
-              <!-- Dropdown - Alerts -->
-              
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Tus Pedidos  <i class="fas fa-shopping-cart"></i>
+                </h6>
+                  {% if carrito %}
+                    {% for carrito in carrito %}
+                <a class="dropdown-item d-flex align-items-center" href="{% url 'libreria:pedidos_cliente' user.id %}">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="/media/{{ carrito.isbn.portada }}" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                    <div class="font-weight-bold">
+                      <div class="text-truncate">{{ carrito.isbn.titulo }}</div>
+                      <div class="small text-gray-500">Valor: ${{ carrito.valor }} · Fecha Pedido: {{ carrito.fecha_pedido }}</div>
+                    </div>
+                    {% endfor %}
+                  {% else %}
+                    <div class="text-truncate">No tienes pedidos. <a href="{% url 'libreria:pedidos_cliente' user.id %}">Agregar Pedido</a></div>
+                  {% endif %}
+
+                </a>
+              </div>
+            </li>
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
